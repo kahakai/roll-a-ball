@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    private Gyroscope gyro;
+
     private Rigidbody rb;
     public float speed;
 
@@ -14,6 +16,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        gyro = Input.gyro;
+        gyro.enabled = true;
+
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText();
@@ -22,10 +27,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        // float moveHorizontal = Input.GetAxis("Horizontal");
+        // float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        // Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        Vector3 movement = gyro.rotationRate;
 
         rb.AddForce(movement * speed);
     }
