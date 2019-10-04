@@ -40,10 +40,16 @@ public class PlayerController : MonoBehaviour
             }
             case DeviceType.Handheld:
             {
-                float moveHorizontal = -Input.gyro.attitude.z * 2;
-                float moveVertical = Input.gyro.attitude.x * 2;
+                /*float moveHorizontal = Input.acceleration.x;
+                float moveVertical = Input.acceleration.y;
 
-                movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+                movement = new Vector3(moveHorizontal, 0.0f, moveVertical);*/
+
+                // We use unbiased rotation rate to get more accurate values.
+                float orientationX = Input.gyro.rotationRateUnbiased.x;
+                float orientationY = Input.gyro.rotationRateUnbiased.y;
+
+                movement = new Vector3(orientationY, 0.0f, -orientationX);
                 break;
             }
         }
