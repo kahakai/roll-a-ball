@@ -18,7 +18,7 @@ class MainActivity : UnityPlayerActivity() {
             override fun onMove(angle: Int, strength: Int) {
                 val x = joystick.normalizedX
                 val y = joystick.normalizedY
-                UnityBridge.sendMessageToUnity("movement", "$x $y")
+                UnityBridge.onJoystickMoved(x, y)
             }
         })
     }

@@ -5,10 +5,11 @@ import android.os.Handler
 class UnityBridge {
 
     companion object {
-        private lateinit var messageHandler: MessageHandler
+        private lateinit var messageHandler: PlayerMessageHandler
         private lateinit var unityMainThreadHandler: Handler
 
-        fun registerMessageHandler(handler: MessageHandler) {
+        @JvmStatic
+        fun registerMessageHandler(handler: PlayerMessageHandler) {
             messageHandler = handler
             unityMainThreadHandler = Handler()
         }
@@ -17,10 +18,10 @@ class UnityBridge {
             unityMainThreadHandler.post(runnable)
         }
 
-        fun sendMessageToUnity(message: String, data: String) {
+        fun onJoystickMoved(x: Int, y: Int) {
             runOnUnityThread(Runnable {
                 if (::messageHandler.isInitialized) {
-                    messageHandler.onMessage(message, data)
+                    messageHandler.onMoved(x, y)
                 }
             })
         }

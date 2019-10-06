@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     public float speed;
+
+    public static float x;
+    public static float y;
 
     private int count;
     public Text countText;
@@ -46,10 +50,11 @@ public class PlayerController : MonoBehaviour
                 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);*/
 
                 // We use unbiased rotation rate to get more accurate values.
-                float orientationX = Input.gyro.rotationRateUnbiased.x;
-                float orientationY = Input.gyro.rotationRateUnbiased.y;
+                // float orientationX = Input.gyro.rotationRateUnbiased.x;
+                // float orientationY = Input.gyro.rotationRateUnbiased.y;
 
-                movement = new Vector3(orientationY, 0.0f, -orientationX);
+                // movement = new Vector3(orientationY, 0.0f, -orientationX);
+                movement = new Vector3(x, 0.0f, y);
                 break;
             }
         }
@@ -76,15 +81,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private class AndroidMessageHandler : AndroidJavaProxy
+    private class PlayerMessageHandler : AndroidJavaProxy
     {
-        internal AndroidMessageHandler() : base("com.github.artnest.rollaball.MessageHandler")
+        internal PlayerMessageHandler() : base("com.github.artnest.rollaball.PlayerMessageHandler")
         {
         }
 
-        public void onMessage(string message, string data)
+        public void onMoved(int x, int y)
         {
-            // TODO
+            float newX = Convert.ToSingle(x);
+            float newY = Convert.ToSingle(y);
+            PlayerController.x = newX;
+            PlayerController.y = newY;
         }
     }
 
@@ -93,7 +101,7 @@ public class PlayerController : MonoBehaviour
     {
         #if !UNITY_EDITOR
         AndroidJavaClass unityBridge = new AndroidJavaClass("com.github.artnest.rollaball.UnityBridge");
-        unityBridge.CallStatic("registerMessageHandler", new AndroidMessageHandler());
+        unityBridge.CallStatic("registerMessageHandler", new PlayerMessageHandler());
         #endif
     }
 }
