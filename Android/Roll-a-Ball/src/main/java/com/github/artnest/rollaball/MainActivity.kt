@@ -16,8 +16,9 @@ class MainActivity : UnityPlayerActivity() {
         val joystick: JoystickView = findViewById(R.id.joystick)
         joystick.setOnMoveListener(object : JoystickView.OnMoveListener {
             override fun onMove(angle: Int, strength: Int) {
-                val x = joystick.normalizedX
-                val y = joystick.normalizedY
+                // [-50, 50] -> [-0.5f, 0.5f]
+                val x = (joystick.normalizedX - 50) / 100f
+                val y = (50 - joystick.normalizedY) / 100f
                 UnityBridge.onJoystickMoved(x, y)
             }
         })
