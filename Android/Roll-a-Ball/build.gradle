@@ -70,7 +70,6 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
             signingConfig signingConfigs.debug
             jniDebuggable true
@@ -78,7 +77,6 @@ android {
 
         release {
             minifyEnabled false
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
             signingConfig signingConfigs.debug
         }
@@ -92,7 +90,6 @@ android {
             universalApk false
         }
     }
-
 
     bundle {
         language {

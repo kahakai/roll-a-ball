@@ -9,13 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ImageButton
-        android:id="@+id/unity_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:src="@mipmap/app_icon" />
+    <com.github.artnest.rollaball.JoystickView
+        android:layout_width="@dimen/joystick_size"
+        android:layout_height="@dimen/joystick_size"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/joystick_margin"
+        android:layout_marginBottom="@dimen/joystick_margin" />
 
 </FrameLayout>
