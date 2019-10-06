@@ -10,6 +10,7 @@
         android:layout_height="match_parent" />
 
     <com.github.artnest.rollaball.JoystickView
+        android:id="@+id/joystick"
         android:layout_width="@dimen/joystick_size"
         android:layout_height="@dimen/joystick_size"
         android:layout_gravity="bottom|end"

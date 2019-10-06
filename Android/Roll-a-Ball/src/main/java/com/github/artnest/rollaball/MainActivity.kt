@@ -12,5 +12,12 @@ class MainActivity : UnityPlayerActivity() {
         val unityPlayerLayout: FrameLayout = findViewById(R.id.unity_player_layout)
         unityPlayerLayout.addView(mUnityPlayer.view)
         mUnityPlayer.requestFocus()
+
+        val joystick: JoystickView = findViewById(R.id.joystick)
+        joystick.setOnMoveListener(object : JoystickView.OnMoveListener {
+            override fun onMove(angle: Int, strength: Int) {
+                // TODO
+            }
+        })
     }
 }
