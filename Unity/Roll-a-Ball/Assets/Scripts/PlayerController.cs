@@ -75,4 +75,25 @@ public class PlayerController : MonoBehaviour
             winText.text = "You Win!";
         }
     }
+
+    private class AndroidMessageHandler : AndroidJavaProxy
+    {
+        internal AndroidMessageHandler() : base("com.github.artnest.rollaball.MessageHandler")
+        {
+        }
+
+        public void onMessage(string message, string data)
+        {
+            // TODO
+        }
+    }
+
+    [RuntimeInitializeOnLoadMethod]
+    private static void Initialize()
+    {
+        #if !UNITY_EDITOR
+        AndroidJavaClass unityBridge = new AndroidJavaClass("com.github.artnest.rollaball.UnityBridge");
+        unityBridge.CallStatic("registerMessageHandler", new AndroidMessageHandler());
+        #endif
+    }
 }
