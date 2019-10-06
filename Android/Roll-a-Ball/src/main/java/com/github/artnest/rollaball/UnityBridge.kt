@@ -18,7 +18,7 @@ class UnityBridge {
             unityMainThreadHandler.post(runnable)
         }
 
-        fun onJoystickMoved(x: Float, y: Float) {
+        fun onJoystickMoved(x: Int, y: Int) {
             runOnUnityThread(Runnable {
                 if (::messageHandler.isInitialized) {
                     messageHandler.onMoved(x, y)

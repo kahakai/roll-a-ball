@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,12 +87,10 @@ public class PlayerController : MonoBehaviour
         {
         }
 
-        public void onMoved(int x, int y)
+        public void onMoved(float x, float y)
         {
-            float newX = Convert.ToSingle(x);
-            float newY = Convert.ToSingle(y);
-            PlayerController.x = newX;
-            PlayerController.y = newY;
+            PlayerController.x = x;
+            PlayerController.y = y;
         }
     }
 
