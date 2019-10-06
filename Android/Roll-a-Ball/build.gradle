@@ -1,5 +1,8 @@
 buildscript {
     ext.versions = [
+            'androidx'             : [
+                    'constraint_layout': '1.1.3',
+            ],
             'android_gradle_plugin': '3.5.1',
             'kotlin'               : '1.3.50'
     ]
@@ -110,6 +113,8 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "androidx.constraintlayout:constraintlayout:${versions.androidx.constraint_layout}"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
 }

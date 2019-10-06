@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public float speed;
 
+    public static int mode;
+
     public static float x;
     public static float y;
 
@@ -44,17 +46,32 @@ public class PlayerController : MonoBehaviour
             }
             case DeviceType.Handheld:
             {
-                /*float moveHorizontal = Input.acceleration.x;
-                float moveVertical = Input.acceleration.y;
+                switch (mode)
+                {
+                    case 0:
+                    {
+                        float moveHorizontal = Input.acceleration.x;
+                        float moveVertical = Input.acceleration.y;
 
-                movement = new Vector3(moveHorizontal, 0.0f, moveVertical);*/
+                        movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+                        break;
+                    }
+                    case 1:
+                    {
+                        // We use unbiased rotation rate to get more accurate values.
+                        float orientationX = Input.gyro.rotationRateUnbiased.x;
+                        float orientationY = Input.gyro.rotationRateUnbiased.y;
 
-                // We use unbiased rotation rate to get more accurate values.
-                // float orientationX = Input.gyro.rotationRateUnbiased.x;
-                // float orientationY = Input.gyro.rotationRateUnbiased.y;
+                        movement = new Vector3(orientationY, 0.0f, -orientationX);
+                        break;
+                    }
+                    case 2:
+                    {
+                        movement = new Vector3(x, 0.0f, y);
+                        break;
+                    }
+                }
 
-                // movement = new Vector3(orientationY, 0.0f, -orientationX);
-                movement = new Vector3(x, 0.0f, y);
                 break;
             }
         }
@@ -81,6 +98,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private class ControlModeHandler : AndroidJavaProxy
+    {
+        internal ControlModeHandler() : base("com.github.artnest.rollaball.ControlModeHandler")
+        {
+        }
+
+        public void onControlModeSelected(int mode)
+        {
+            PlayerController.mode = mode;
+        }
+    }
+
+    [RuntimeInitializeOnLoadMethod]
+    private static void InitializeControlModeHandler()
+    {
+        #if !UNITY_EDITOR
+        AndroidJavaClass unityBridge = new AndroidJavaClass("com.github.artnest.rollaball.UnityBridge");
+        unityBridge.CallStatic("registerControlModeHandler", new ControlModeHandler());
+        #endif
+    }
+
     private class PlayerMessageHandler : AndroidJavaProxy
     {
         internal PlayerMessageHandler() : base("com.github.artnest.rollaball.PlayerMessageHandler")
@@ -95,11 +133,11 @@ public class PlayerController : MonoBehaviour
     }
 
     [RuntimeInitializeOnLoadMethod]
-    private static void Initialize()
+    private static void InitializePlayerMessageHandler()
     {
         #if !UNITY_EDITOR
         AndroidJavaClass unityBridge = new AndroidJavaClass("com.github.artnest.rollaball.UnityBridge");
-        unityBridge.CallStatic("registerMessageHandler", new PlayerMessageHandler());
+        unityBridge.CallStatic("registerPlayerMessageHandler", new PlayerMessageHandler());
         #endif
     }
 }
