@@ -21,21 +21,21 @@ class MainActivity : UnityPlayerActivity(), UnityPlayerContainer {
         val accelerometerButton: Button = findViewById(R.id.accelerometer_button)
         accelerometerButton.setOnClickListener {
             hideWelcomeGroup()
-            UnityBridge.selectControlMode(0)
-        }
-
-        val gyroscopeButton: Button = findViewById(R.id.accelerometer_button)
-        gyroscopeButton.setOnClickListener {
-            hideWelcomeGroup()
             UnityBridge.selectControlMode(1)
         }
 
-        val joystickButton: Button = findViewById(R.id.accelerometer_button)
+        val gyroscopeButton: Button = findViewById(R.id.gyroscope_button)
+        gyroscopeButton.setOnClickListener {
+            hideWelcomeGroup()
+            UnityBridge.selectControlMode(2)
+        }
+
+        val joystickButton: Button = findViewById(R.id.joystick_button)
         joystickButton.setOnClickListener {
             hideWelcomeGroup()
             val joystick: JoystickView = findViewById(R.id.joystick)
             joystick.visibility = View.VISIBLE
-            UnityBridge.selectControlMode(2)
+            UnityBridge.selectControlMode(3)
         }
 
         val joystick: JoystickView = findViewById(R.id.joystick)
@@ -50,6 +50,7 @@ class MainActivity : UnityPlayerActivity(), UnityPlayerContainer {
     }
 
     override fun onInitialized() {
+        // the views don't want to draw overtop with the change of visibility :(
         val welcomeGroup: Group = findViewById(R.id.welcome_group)
         welcomeGroup.visibility = View.VISIBLE
     }

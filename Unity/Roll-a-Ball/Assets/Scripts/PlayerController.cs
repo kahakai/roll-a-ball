@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
             {
                 switch (mode)
                 {
-                    case 0:
+                    case 1:
                     {
                         float moveHorizontal = Input.acceleration.x;
                         float moveVertical = Input.acceleration.y;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
                         movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
                         break;
                     }
-                    case 1:
+                    case 2:
                     {
                         // We use unbiased rotation rate to get more accurate values.
                         float orientationX = Input.gyro.rotationRateUnbiased.x;
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
                         movement = new Vector3(orientationY, 0.0f, -orientationX);
                         break;
                     }
-                    case 2:
+                    case 3:
                     {
                         movement = new Vector3(x, 0.0f, y);
                         break;

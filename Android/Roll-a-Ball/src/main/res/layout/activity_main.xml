@@ -81,7 +81,6 @@
         android:id="@+id/welcome_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:constraint_referenced_ids="welcome_label,choose_control_mode_label,accelerometer_button,gyroscope_button,joystick_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
